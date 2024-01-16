@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -28,8 +28,8 @@
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
-    "@types/nodemon": "^1.19.6",
-    "nodemon": "^3.0.3"
+    "morgan": "^1.10.0"
   }
 }
