@@ -1,3 +1,4 @@
+import { USER_ROLE } from "../util/role.enum";
 import { IJob } from "./IJob";
 
 export interface IUser {
@@ -5,8 +6,8 @@ export interface IUser {
     firstname: string,
     email: string,
     password: string,
-    role: string,
-    jobs: IJob[]
+    role: USER_ROLE,
+    jobs?: IJob[]
 }
 
 export interface IUserDTO extends Omit<IUser, "password"> { }
