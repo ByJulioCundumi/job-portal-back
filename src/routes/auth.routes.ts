@@ -3,9 +3,9 @@ import { loginController, logoutController, registerController, verifyAccessCont
 
 const router = Router()
 //
-router.post("login", loginController)
-router.post("register", registerController)
-router.post("logout", logoutController)
-router.get("verify-access", verifyAccessController)
+router.post("/login", loginController)
+router.post("/register", registerController)
+router.post("/logout", logoutController)
+router.get("/verify-access", verifyAccessController)
 //
 export default router;
