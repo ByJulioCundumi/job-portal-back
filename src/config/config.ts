@@ -9,3 +9,6 @@ export const DB_USERNAME = process.env.DB_USERNAME || "job-portal-username";
 export const DB_PASSWORD = process.env.DB_PASSWORD || "portal-password";
 export const DB_NAME = process.env.DB_NAME || "job-portal";
 export const SECRECT_KEY = process.env.SECRECT_KEY || "SecreDJklf";
+export const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME || "cloudinary";
+export const CLOUDINARY_KEY = process.env.CLOUDINARY_KEY || "cloudinary";
+export const CLOUDINARY_SECRECT = process.env.CLOUDINARY_SECRECT || "cloudinary";

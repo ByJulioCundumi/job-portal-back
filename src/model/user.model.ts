@@ -8,6 +8,12 @@ export class User extends BaseEntity{
     @PrimaryGeneratedColumn()
     id:number;
 
+    @Column({type:"simple-json", nullable:true})
+    img: {
+        url:string,
+        id:string
+    }
+
     @Column({nullable:false})
     firstname:string;
 

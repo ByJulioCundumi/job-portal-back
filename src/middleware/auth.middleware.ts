@@ -1,17 +1,13 @@
 import { NextFunction, Request, Response } from "express"
+import jwt from "jsonwebtoken"
+import { SECRECT_KEY } from "../config/config.js"
 
-export const userAuthRequired = async (req:Request, res:Response, next:NextFunction)=>{
-    try {
-        
-    } catch (error) {
-        console.log(error)
-    }
-}
+export const companyAuthRequired = async (req: Request, res: Response, next: NextFunction) => {
+    const { token } = req.cookies
+    if (!token) return res.status(401).json({ message: "Acceso denegado por falta de token" })
 
-export const companyAuthRequired = async (req:Request, res:Response, next:NextFunction)=>{
-    try {
-        
-    } catch (error) {
-        console.log(error)
-    }
+    jwt.verify(token, SECRECT_KEY, (err: jwt.VerifyErrors | null, decoded: any) => {
+        if (err) return res.status(403).json({ message: "Acceso denegado, token invalido" })
+    })
+    next()
 }

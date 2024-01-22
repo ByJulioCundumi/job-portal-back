@@ -1,12 +1,14 @@
 import { Router } from "express";
-import { deleteJobController, getJobController, getJobsController, postJobController, putJobController } from "../controller/job.controller.js";
+import { deleteJobController, getAllJobsController, getJobController, getJobsController, postJobController, putJobController } from "../controller/job.controller.js";
+import { companyAuthRequired } from "../middleware/auth.middleware.js";
 
 const router = Router()
 //
-router.get("job/id", getJobController)
-router.get("job", getJobsController)
-router.post("job", postJobController)
-router.put("job", putJobController)
-router.delete("job", deleteJobController)
+router.get("/job/:id", companyAuthRequired, getJobController)
+router.get("/job", companyAuthRequired, getJobsController)
+router.get("/all-job", companyAuthRequired, getAllJobsController)
+router.post("/job", companyAuthRequired, postJobController)
+router.put("/job/:id", companyAuthRequired, putJobController)
+router.delete("/job/:id", companyAuthRequired, deleteJobController)
 //
 export default router;
