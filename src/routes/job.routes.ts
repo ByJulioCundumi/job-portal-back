@@ -6,7 +6,7 @@ const router = Router()
 //
 router.get("/job/:id", companyAuthRequired, getJobController)
 router.get("/job", companyAuthRequired, getJobsController)
-router.get("/all-job", companyAuthRequired, getAllJobsController)
+router.get("/all-job", getAllJobsController)
 router.post("/job", companyAuthRequired, postJobController)
 router.put("/job/:id", companyAuthRequired, putJobController)
 router.delete("/job/:id", companyAuthRequired, deleteJobController)

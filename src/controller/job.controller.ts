@@ -41,18 +41,14 @@ export const getJobsController = async (req: Request, res: Response) => {
 }
 
 export const getAllJobsController = async (req: Request, res: Response) => {
-    const { token } = req.cookies
     const jobRepo = AppDataSource.getRepository(Job)
     try {
-        jwt.verify(token, SECRECT_KEY, async (err: jwt.VerifyErrors | null, decoded: any) => {
-            const jobs = await jobRepo.find({
-                relations: {
-                    user: true,
-                },
-            })
-            console.log(jobs)
-            return res.status(200).json(jobs)
+        const jobs = await jobRepo.find({
+            relations: {
+                user: true,
+            },
         })
+        return res.status(200).json(jobs)
     } catch (error) {
         console.log(error)
     }
