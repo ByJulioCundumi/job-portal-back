@@ -32,7 +32,7 @@ export const registerController = async (req: Request, res: Response) => {
         }
         //
         const result = await user.save()
-        if (!result.id) return res.status(500).json({ message: "Error al registrar el nuevo usuario" })
+        if (!result.id) return res.status(200).json({ message: "Error al registrar el nuevo usuario" })
 
         const token = {
             id: result.id,
@@ -43,7 +43,7 @@ export const registerController = async (req: Request, res: Response) => {
         }
 
         jwt.sign(token, SECRECT_KEY, { expiresIn: "1d" }, (error, token) => {
-            if (error) return res.status(500).json({ message: "Error al crear el token de acceso" })
+            if (error) return res.status(200).json({ message: "Error al crear el token de acceso" })
             //
             res.cookie("token", token)
             return res.status(201).json({
@@ -64,7 +64,7 @@ export const loginController = async (req: Request, res: Response) => {
 
     try {
         const userFound = await User.findOneBy({ email: userBody.email })
-        if (!userFound?.id) return res.status(401).json({ message: "Usuario no encontrado" })
+        if (!userFound?.id) return res.status(200).json({ message: "Usuario no encontrado" })
         //
         const token = {
             id: userFound.id,
@@ -76,7 +76,7 @@ export const loginController = async (req: Request, res: Response) => {
         }
         //
         jwt.sign(token, SECRECT_KEY, { expiresIn: "1d" }, (error, token) => {
-            if (error) return res.status(500).json({ message: "Error al crear el token de acceso" })
+            if (error) return res.status(200).json({ message: "Error al crear el token de acceso" })
             //
             res.cookie("token", token)
             return res.status(200).json({
@@ -102,14 +102,14 @@ export const logoutController = async (req: Request, res: Response) => {
 
 export const verifyAccessController = async (req: Request, res: Response) => {
     const { token } = req.cookies;
-    if (!token) return res.status(401).json({ message: "Acceso denegado, token inexistente" })
+    if (!token) return res.status(200).json({ message: "Acceso denegado, token inexistente" })
     //
     jwt.verify(token, SECRECT_KEY, async (error: jwt.VerifyErrors | null, decoded: any) => {
-        if (error) return res.status(401).json({ message: "Acceso denegago, token invalido" })
+        if (error) return res.status(200).json({ message: "Acceso denegago, token invalido" })
         //
         try {
             const result = await User.findOneBy({ id: decoded.id })
-            if (!result?.id) return res.status(401).json({ message: "Usuario no encontrado" })
+            if (!result?.id) return res.status(200).json({ message: "Usuario no encontrado" })
             //
             return res.status(200).json(result)
         } catch (error) {

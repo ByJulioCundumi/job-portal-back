@@ -13,7 +13,7 @@ export const getJobController = async (req: Request, res: Response) => {
 
     try {
         const found = await Job.findOneBy({ id: parseInt(id) })
-        if (!found?.id) return res.status(404).json({ message: "Trabajo no encontrado" })
+        if (!found?.id) return res.status(200).json({ message: "Trabajo no encontrado" })
         return res.status(200).json(found)
     } catch (error) {
         console.log(error)
@@ -72,7 +72,7 @@ export const postJobController = async (req: Request, res: Response) => {
 
             const result = await job.save()
             console.log(result)
-            if (!result.id) return res.status(500).json({ message: "No se pudo crear el nuevo trabajo" })
+            if (!result.id) return res.status(200).json({ message: "No se pudo crear el nuevo trabajo" })
             return res.status(200).json(result)
         })
     } catch (error) {
@@ -86,7 +86,7 @@ export const putJobController = async (req: Request, res: Response) => {
 
     try {
         const found = await Job.findOneBy({ id: parseInt(id) })
-        if (!found?.id) return res.status(404).json({ message: "Trabajo no encontrado" })
+        if (!found?.id) return res.status(200).json({ message: "Trabajo no encontrado" })
         //
         found.title = body.title;
         found.location = body.location;
@@ -97,7 +97,7 @@ export const putJobController = async (req: Request, res: Response) => {
         found.description = body.description;
 
         const result = await found.save()
-        if (!result.id) return res.status(500).json({ message: "No se pudo actualizar el nuevo trabajo" })
+        if (!result.id) return res.status(200).json({ message: "No se pudo actualizar el nuevo trabajo" })
         //
         return res.status(200).json(result)
     } catch (error) {
@@ -107,12 +107,22 @@ export const putJobController = async (req: Request, res: Response) => {
 
 export const deleteJobController = async (req: Request, res: Response) => {
     const { id } = req.params;
+    const jobRepo = AppDataSource.getRepository(Job)
     try {
-        const found = await Job.findOneBy({ id: parseInt(id) })
-        if (!found?.id) return res.status(404).json({ message: "Trabajo no encontrado" })
+        const found = await jobRepo.findOne({
+            where: {
+                id: parseInt(id)
+            },
+            relations: {
+                user: true,
+            },
+        })
+        if (!found?.id) return res.status(200).json({ message: "Trabajo no encontrado" })
         //
+        await cloudinaryRemoveImage(found.user.img.id)
         const result = await Job.delete(id)
-        if (!(result.affected != 0)) return res.status(500).json({ message: "No se logro eliminar el trabajo" })
+        //
+        if (!(result.affected != 0)) return res.status(200).json({ message: "No se logro eliminar el trabajo" })
         console.log(result)
         return res.sendStatus(200).end()
     } catch (error) {

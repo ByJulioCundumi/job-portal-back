@@ -9,6 +9,6 @@ router.get("/job", companyAuthRequired, getJobsController)
 router.get("/all-job", getAllJobsController)
 router.post("/job", companyAuthRequired, postJobController)
 router.put("/job/:id", companyAuthRequired, putJobController)
-router.delete("/job/:id", companyAuthRequired, deleteJobController)
+router.delete("/job/:id", deleteJobController)
 //
 export default router;

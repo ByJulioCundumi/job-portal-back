@@ -25,7 +25,7 @@ export class Job extends BaseEntity{
     @Column({nullable:false})
     experience:number;
 
-    @Column({nullable:false})
+    @Column({nullable:false, length: 2000})
     description:string;
 
     @ManyToOne(()=> User, (user)=> user.jobs)
