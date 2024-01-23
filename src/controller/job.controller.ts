@@ -118,8 +118,6 @@ export const deleteJobController = async (req: Request, res: Response) => {
             },
         })
         if (!found?.id) return res.status(200).json({ message: "Trabajo no encontrado" })
-        //
-        await cloudinaryRemoveImage(found.user.img.id)
         const result = await Job.delete(id)
         //
         if (!(result.affected != 0)) return res.status(200).json({ message: "No se logro eliminar el trabajo" })
